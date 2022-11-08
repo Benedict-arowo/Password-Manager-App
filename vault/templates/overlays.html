@@ -1,0 +1,113 @@
+{% load static %}
+
+<div id="overlays" class="hidden transition-all duration-300 place-items-center bg-slate-400 bg-opacity-75 fixed top-0 left-0 right-0 bottom-0">
+
+    <div id="FolderForm" class="hidden transition-all duration-300">
+    <form action="{% url 'new-folder' %}" id="formFolder" method="post" class="py-6 px-8 bg-white rounded drop-shadow-xl w-screen sm:w-96 flex flex-col gap-6 items-center h-max opacity-100 z-30">
+        {% csrf_token %}
+        <div class="flex flex-col gap-4 w-full">
+            <section class="flex flex-col w-full text-blue-600 font-medium">
+                <label for="id_nameFolder">Folder Name:</label>
+                <input class="bg-slate-200 border-blue-300 lg:w-full font-normal" type="text" name="name" placeholder="eg: Logins" required="true" id="id_nameFolder">
+            </section>
+
+            <section class="flex flex-col w-full text-blue-600 font-medium">
+                <label for="id_piorityFolder">Folder piority:</label>
+                <input class="bg-slate-200 border-blue-300 lg:w-full font-normal" type="number" min="0" max="5" name="piority" placeholder="eg: 3" id="id_piorityFolder">
+            </section>
+        </div>
+
+
+        <div class="w-full flex gap-4 justify-center">
+            <button id="folderBtn" type="submit" class="flex-1 py-2 bg-blue-300 hover:bg-blue-600 w-fit rounded-md text-white font-bold">Create Folder</button>
+            <button class="cancelForm flex-1 py-2 bg-blue-300 hover:bg-blue-600 w-fit rounded-md text-white font-bold">Cancel</button>
+        </div>
+    </form>
+    </div>
+
+    <form id="ItemForm" method="post" action="{% url 'new-item' %}" class="hidden gap-4 bg-white rounded py-4 px-8 w-screen md:w-max flex-col pb-5">
+        {% csrf_token %}
+        <div class="border-b-gray-100 pb-4 border-b-2">
+            <h3 class="text-center font-semibold text-blue-500 text-2xl">New Item</h3>
+        </div>
+
+        <div class="flex gap-12 flex-col md:flex-row px-4 w-full overflow-y-scroll h-72">
+            <div class="">
+                <section class="flex flex-col w-full text-blue-600 font-medium">
+                    <label class='relative' for="id_name">Name: <span class="absolute -top-1 text-red-300">*</span></label>
+                    <input class="bg-slate-200 border-blue-300 lg:w-full font-normal" type="text" name="name" placeholder="eg: Facebook" required="true" id="id_name">
+                </section>
+
+                <section class="flex flex-col w-full text-blue-600 font-medium">
+                    <label class='relative' for="id_username">Username: <span class="absolute -top-1 text-red-300">*</span></label>
+                    <input class="bg-slate-200 border-blue-300 lg:w-full font-normal" type="text" name="username" placeholder="eg: Johnn" required="true" id="id_username">
+                </section>
+
+                <section class="flex flex-col w-full text-blue-600 font-medium">
+                    <label class='relative' for="id_password">Password: <span class="absolute -top-1 text-red-300">*</span></label>
+                    <input class="bg-slate-200 border-blue-300 lg:w-full font-normal" type="password" name="password" placeholder="eg: Johnn" required="true" id="id_password">
+                </section>
+
+                <section class="flex flex-col w-full text-blue-600 font-medium">
+                    <label for="id_username">Notes:</label>
+                    <textarea class="bg-slate-200 border-blue-300 lg:w-full font-normal max-h-36" type="text" name="notes" id="id_notes" cols="30" rows="10"></textarea>
+                </section>
+            </div>
+
+            <div class="">
+                <section class="flex flex-col w-full text-blue-600 font-medium">
+                    <label for="id_folder">Folder:</label>
+                    <select class="bg-slate-200 border-blue-300 lg:w-full font-normal" name="folder" id="folder">
+                        {% if Folders %}
+                            <option value selected>None</option>
+                        {% else %}
+                            <option value selected disabled>You have no folders available</option>
+                        {% endif %}
+                        
+                        {% for folder in Folders %}
+                            <option value="{{folder.id}}">{{folder.name}}</option>
+                        {% endfor %}
+                    </select>
+                </section>
+
+                <section class="flex flex-col w-full text-blue-600 font-medium">
+                    <label for="id_email">Email:</label>
+                    <input class="bg-slate-200 border-blue-300 lg:w-full font-normal" type="email" name="email" placeholder="eg: JohnDoe@gmail.com" id="id_email">
+                </section>
+
+                
+
+                <section class="flex flex-col w-full text-blue-600 font-medium">
+                    <label for="id_piority">Piority: </label>
+                    <input class="bg-slate-200 border-blue-300 lg:w-full font-normal" type="number" name="piority" min="0" max="5" id="id_piority">
+                    <p class="font-thin text-sm text-slate-400">(min - 0, max-5)</p>
+                </section>
+
+                <section class="flex flex-col w-full text-blue-600 font-medium">
+                    <label class="relative" for="id_url">Url: <span class="absolute -top-1 text-red-300">*</span></label>
+                    <input class="bg-slate-200 border-blue-300 lg:w-full font-normal" type="url" name="url" required="true" id="id_url">
+                </section>
+            </div>
+        </div>
+        <div class="w-fill flex justify-center gap-4 md:gap-8 mt-4">
+            <button class="px-12 py-2 bg-blue-400 hover:bg-blue-600 flex-1 md:w-fit rounded-md text-white font-bold" type="submit">Create</button>
+            <button class="cancelForm px-12 py-2 bg-blue-400 hover:bg-blue-600 flex-1 md:w-fit rounded-md text-white font-bold">Cancel</button>
+        </div>
+    </form>
+
+    <div id="DeleteForm" class="hidden place-content-center">
+        <div class="container">
+            <form class="flex flex-col gap-4">
+                <p class="font-medium text-white text-2xl">Are you sure you want to delete this <span id="itemtype"></span>?</p>
+
+                <div class="w-full flex gap-4 justify-center">
+                    <a class="flex-1 py-2 bg-blue-300 hover:bg-blue-600 w-fit rounded-md text-white font-bold text-center" id="deleteLink" href="">Delete</a>
+                    <button class="cancelForm flex-1 py-2 bg-blue-300 hover:bg-blue-600 w-fit rounded-md text-white font-bold">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="{% static 'vault/overlays.js' %}"></script>

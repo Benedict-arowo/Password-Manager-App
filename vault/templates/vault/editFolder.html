@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    {% include 'nav.html' %}
+
+    <div class="flex flex-1 max-w-screen-2xl mx-auto mt-4">
+        <main class="w-full h-fill">
+            <form action="" method="post" class="p-8 max-w-3xl mx-auto">
+                {% csrf_token %}
+                <section class="flex flex-col w-full text-blue-600 font-medium">
+                    <label for="id_name">Name:</label>
+                    {{ form.name }}
+
+                </section>
+
+                <section class="flex flex-col w-full text-blue-600 font-medium">
+                    <label for="id_name">Piority:</label>
+                    {{ form.piority }}
+                </section>
+
+                <div class="w-fill flex justify-center gap-8 mt-4">
+                    <button class="px-12 py-2 bg-blue-400 hover:bg-blue-600 w-fit rounded-md text-white font-bold" type="submit">Edit</button>
+                    <a href="{{ request.META.HTTP_REFERER }}" class="cancelForm px-12 py-2 bg-blue-400 hover:bg-blue-600 w-fit rounded-md text-white font-bold">Cancel</a>
+                </div>
+            </form>
+        </main>
+    </div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <main class="grid place-content-center h-screen m-0 font-sans" >
+       <div class="container drop-shadow-lg rounded overflow-hidden bg-blue-200 w-screen sm:w-96 h-fit">
+            <div class="text-white w-full h-max bg-blue-600 p-5">
+                <h1 class="p-0 m-0 font-bold text-xl">Authentication</h1>
+                <p id="desc" class="p-0 m-0 ">Log in to access your secure vault.</p>
+            </div>
+
+            <form action="{% url 'login' %}" method="post" class="px-6 py-4 flex flex-col gap-4">
+                {% csrf_token %}
+                
+                <div id="form"></div>
+
+                <div class="container w-full flex justify-center gap-8 text-white font-bold">
+                    <button id="loginBtn" class="px-12 py-2 bg-blue-300 w-fit rounded-md">Login</button>
+                    <button id="registerBtn" class="px-12 py-2 bg-blue-300 w-fit rounded-md">Register</button>
+                </div>
+                <div class="container w-full flex justify-center gap-8 text-white font-bold">
+                    <button type="submit" class="px-12 py-2 bg-blue-600 w-fit rounded-md">Submit</button>
+                </div>
+            </form>
+       </div>
+    </main>
+
+    <script src="{% static 'auth/auth.js' %}"></script>
+    <script>
+        var loginUrl = "{% url 'login' %}"
+        var registerUrl = "{% url 'register' %}"
+
+        var register = `<section class="flex flex-col w-full text-blue-600 font-medium">
+                        <label for="id_email">Email:</label>
+                        <input class="bg-slate-200 border-blue-300 lg:w-full font-normal" type="email" name="email" placeholder="eg: JohnDoe@gmail.com" required="true" id="id_email">
+                    </section>
+    
+                    <section class="flex flex-col w-full text-blue-600 font-medium">
+                        <label for="id_username" class="block">Username:</label>
+                        <input class="bg-slate-200 border-blue-300 lg:w-full font-normal" type="text" name="username" placeholder="eg: JohnDoe" required="true" id="id_username">
+                    </section>
+                    
+                    <section class="flex flex-col w-full text-blue-600 font-medium">
+                        <label for="id_password">Password:</label>
+                        <input class="bg-slate-200 border-blue-300 lg:w-full font-normal" type="password" name="password" placeholder="Password" required="true" id="id_password">
+                    </section>
+                    
+                    <section class="flex flex-col w-full text-blue-600 font-medium">
+                        <label for="id_hint" class="block">Password Hint:</label>
+                        <input class="bg-slate-200 border-blue-300 lg:w-full font-normal" type="text" name="hint" placeholder="eg: schoolname + 3rd year" required="true" id="id_hint">
+                    </section>`
+                    
+
+        var login = `<section class="flex flex-col w-full text-blue-600 font-medium">
+                        <label for="id_email">Email:</label>
+                        <input class="bg-slate-200 border-blue-300 lg:w-full font-normal" type="email" name="email" placeholder="eg: JohnDoe@gmail.com" required="true" id="id_email">
+                    </section>
+                    
+                    <section class="flex flex-col w-full text-blue-600 font-medium">
+                        <label for="id_password">Password:</label>
+                        <input class="bg-slate-200 border-blue-300 lg:w-full font-normal" type="password" name="password" placeholder="password" required="true" id="id_password">
+                        <a href={% url 'get-hint' %} class="text-sm hover:underline cursor-pointer decoration-none">Get password hint</a>
+                    </section>`
+    </script>
+{% endblock %}

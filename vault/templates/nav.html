@@ -1,0 +1,11 @@
+{% load static %}
+
+<div class="w-screen bg-blue-600">
+    <nav class="w-full bg-blue-600 flex flex-row h-16 px-2 md:px-8 overflow-hidden items-center justify-between gap-4 max-w-screen-2xl mx-auto drop-shadow-lg">
+        <a href="{% url 'index' %}"><h1 class="text-white font-extrabold text-lg md:text-2xl cursor-pointer ">Password<span class="text-blue-400">Manager</span></h1></a>
+        <div class="text-white text-end">
+            <a href="{% url 'logout' %}" class="text-md  w-full cursor-pointer hover:underline">Logout</a>
+            <p class="text-xs cursor-default">Currently logged in as <span class="capitalize underline">{{ request.user.username }}</span></p>
+        </div>
+    </nav>
+</div>

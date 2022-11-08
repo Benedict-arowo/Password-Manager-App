@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <main class="grid place-content-center h-screen m-0 font-sans" >
+       <div class="container drop-shadow-lg rounded overflow-hidden bg-blue-200 w-screen sm:w-96 h-fit">
+            <div class="text-white w-full h-max bg-blue-600 p-5">
+                <h1 class="p-0 m-0 font-bold text-xl">Password Hint</h1>
+                <p id="desc" class="p-0 m-0 ">Fill the form with your email to obtain your password hint. Incase you have forgotten it.</p>
+            </div>
+
+            <form method="post" class="px-6 py-4 flex flex-col gap-4">
+                {% csrf_token %}
+                {% if err %}
+                    <p class="text-red-400 font-semibold text-center w-full">Error: {{ err }} </p>
+                {% endif %}
+
+                {% if not hint %}
+                <section class="flex flex-col w-full text-blue-600 font-medium">
+                    <label for="email">Email:</label>
+                    <input class="bg-slate-200 border-blue-300 lg:w-full font-normal" type="email" name="email" placeholder="eg: JohnDoe@gmail.com" required="true" id="email">
+                </section>
+                <section class="flex flex-col w-full text-blue-600 font-medium">
+                    <label for="username">Username:</label>
+                    <input class="bg-slate-200 border-blue-300 lg:w-full font-normal" type="text" name="username" placeholder="eg: JohnDoe" required="true" id="username">
+                </section>
+
+                <div class="container w-full flex justify-center gap-8 text-white font-bold">
+                    <button type="submit" class="px-12 py-2 bg-blue-600 w-fit rounded-md">Submit</button>
+                    <a href="{% url 'auth' %}" class="decoration-none px-12 py-2 bg-blue-600 w-fit rounded-md">Back</a>
+                </div>
+                {% else %}
+                    <section>
+                        <p class="text-blue-600 font-semibold">Your password hint is:</p>
+                        <p class="text-slate-200 bg-blue-600 border-blue-300 py-3 px-4 h-max rounded-md w-full">{{ hint }}</p>
+                    </section>
+
+                    <div class="container w-full flex justify-center gap-8 text-white font-bold">
+                       <a href="{% url 'get-hint' %}" class="decoration-none px-12 py-2 bg-blue-600 w-fit rounded-md">Back</a>
+                       <a href="{% url 'auth' %}" class="decoration-none px-12 py-2 bg-blue-600 w-fit rounded-md">Login</a>
+                    </div>
+                {% endif %}
+            </form>
+       </div>
+    </main>
+{% endblock %}

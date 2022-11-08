@@ -1,0 +1,48 @@
+{% load static %}
+<aside id="menu" class="h-screen md:flex justify-center pt-12 md:pt-0 md:w-2/6 absolute top-0 bottom-0 left-0 right-0 md:static md:block hidden bg-white border-r-slate-100 md:opacity-100 border-r-2 px-4 transition-all duration-500">
+    <div class="flex-1">
+        <form action="" class="flex justify-between gap-4 items-center">
+            <input class="bg-slate-200 border-blue-300 w-full font-normal rounded " type="text" name="q" placeholder="Search..." id="">
+            <i id="menuBtn" class="fa-solid block md:hidden cursor-pointer fa-bars text-2xl"></i>
+        </form>
+
+        <div class="mt-4 flex justify-between w-fill items-center border-b-slate-100 border-b-2 pb-2">
+            <h3 class="cursor-default font-medium text-base text-gray-500">Add Folder</h3>
+            <i data-click='folderForm' id="addFolder" class="fa-solid fa-plus text-gray-500 cursor-pointer hover:scale-110 transition-all duration-300"></i>
+        </div>
+        <div class="mt-4 pb-4 border-b-slate-100 border-b-2">
+            <div class="cursor-pointer w-fill flex items-center text-gray-400 hover:text-blue-500 gap-2 text-base" >
+                <i class="fa-solid fa-bars "></i>
+                <a href="{% url 'index' %}" class="">All items</a>
+            </div>
+            <div class="cursor-pointer w-fill flex items-center gap-2 text-gray-400 hover:text-blue-500 text-base" >
+                <i class="fa-solid fa-star"></i>
+                <a href="{% url 'index' %}?type=starred">Starred</p>
+            </div>
+            <div class="cursor-pointer w-fill flex items-center gap-2 text-gray-400 hover:text-blue-500 text-base" >
+                <i class="fa-solid fa-ranking-star"></i>
+                <a href="{% url 'index' %}?type=piority ">Piority</a>
+            </div>
+        </div>
+        <div class="mt-2">
+            <h3 class="cursor-default font-medium text-base text-gray-500">Folders</h3>
+            <div class="mt-1">
+                {% for folder in Folders %}
+                    <div class="flex gap-2 justify-between w-fill items-center">
+                        <div class="">
+                            <i class="fa-solid fa-right-long text-gray-500"></i>
+                            <a class="text-sm hover: capitalize" href="{% url 'index' %}?type=folder&uuid={{ folder.id }}">{{ folder.name }}</a>
+                        </div>
+                        <div class="flex gap-2 items-center">
+                            <i data-id="{{ folder.id }}" title="Delete Folder" class="fa-solid fa-trash text-slate-400 deleteBtn cursor-pointer"></i>
+                        
+                            <a href="{% url 'edit-folder' folder.id %}"><i class="fa-solid fa-pen-to-square editBtn cursor-pointer text-slate-400" data-id="{{ folder.id }}" title="Edit Folder" ></i></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'vault/aside.js' %}"></script>
+</aside>
