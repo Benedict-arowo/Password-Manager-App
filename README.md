@@ -1,4 +1,12 @@
 
+##  Test Account:
+
+Email: test@test.com
+
+Username: testuser
+
+Password: test1234
+
   
 
 #  CS50w Capstone
@@ -99,15 +107,6 @@ I've also added some JavaScript files, which are mainly there to make the site l
 * The app should be running on [127.0.0.1:8000](127.0.0.1:8000)
 
   
-
-##  Test Account:
-
-Email: test@test.com
-
-Username: testuser
-
-Password: test1234
-
   
 
 :arrow_forward: &nbsp;  **View Live Demo [here](https://youtu.be/N07PgXOyiP4)**
